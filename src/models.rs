@@ -11,6 +11,6 @@ pub trait OutputConsumer {
 pub trait WarningsCollector {
     fn remember_empty_value(&mut self, coniguration: &String);
     fn handle_empty_values(&mut self, key: &String);
-    fn check_key_name(&mut self, key: &String, configuration: &String);
+    fn check_key_name(&mut self, key: &String, configurations: &Vec<String>);
     fn duplicated_key(&self, key: &String, configuration: &String);
 }

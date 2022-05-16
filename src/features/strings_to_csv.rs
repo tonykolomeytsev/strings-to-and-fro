@@ -88,11 +88,7 @@ fn read_entry_for_each_configuration<W>(
                     pool.insert(entry.key.clone(), HashMap::new());
                 }
                 let entries = pool.get_mut(&entry.key).unwrap();
-                if entries.contains_key(configuration) {
-                    warnings.duplicated_key(&entry.key, configuration);
-                }
                 entries.insert(configuration.clone(), entry.value);
-                warnings.check_key_name(&entry.key, configuration);
 
                 true
             }
@@ -135,6 +131,7 @@ fn save_fully_defined_entries<O, W>(
             // Keep saved keys in memory to clear pool later
             keys_for_removing.push(key.clone());
             warnings.handle_empty_values(key);
+            warnings.check_key_name(key, configurations);
         }
     });
     // Remove fully defined and saved keys from pool
