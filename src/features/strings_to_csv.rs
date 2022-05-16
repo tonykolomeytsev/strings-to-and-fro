@@ -55,7 +55,7 @@ where
     // Start reading iterations
     let mut i = 0;
     loop {
-        read_entry_for_each_configuration(&mut unfinished, &mut readers, &mut pool, warnings);
+        read_entry_for_each_configuration(&mut unfinished, &mut readers, &mut pool);
         save_fully_defined_entries(&unfinished, output, &mut pool, warnings);
         if unfinished.is_empty() {
             break;
@@ -72,14 +72,11 @@ where
     }
 }
 
-fn read_entry_for_each_configuration<W>(
+fn read_entry_for_each_configuration(
     configurations: &mut Vec<String>,
     readers: &mut HashMap<String, AndroidStringsReader>,
     pool: &mut HashMap<String, HashMap<String, String>>,
-    warnings: &mut W,
-) where
-    W: WarningsCollector,
-{
+) {
     configurations.retain(|configuration| {
         let reader = readers.get_mut(configuration).unwrap();
         match reader.next() {
